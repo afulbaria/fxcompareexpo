@@ -1,0 +1,5 @@
+[
+  { "source": "GBP", "target": "EUR", "rate": 1.16, "fee": 0.45 },
+  { "source": "GBP", "target": "USD", "rate": 1.27, "fee": 0.50 },
+  { "source": "GBP", "target": "INR", "rate": 105.2, "fee": 0.65 }
+]
