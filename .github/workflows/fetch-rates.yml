@@ -1,0 +1,32 @@
+name: Fetch Forex Rates
+
+# Trigger schedule and manual run
+on:
+  schedule:
+    # Runs daily at 00:00 UTC (adjust cron as needed)
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  fetch-rates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run rate fetcher
+        env:
+          WISE_API_KEY: ${{ secrets.WISE_API_KEY }}
+          REVOLUT_API_KEY: ${{ secrets.REVOLUT_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npx ts-node rate-fetcher/fetchAllRates.ts
